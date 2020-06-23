@@ -1,0 +1,99 @@
+import java.util.*;
+
+public class LiarsDice {
+    public static void main(String args[] ) throws Exception {
+       Scanner sc = new Scanner(System.in);
+       
+        String p = sc.nextLine();
+        int n = Integer.parseInt(p);
+        String input = sc.nextLine();
+        
+        String [] rolls = input.split(" ");
+        int [] roll = new int[5];
+        for(int i = 0; i < rolls.length; i++){
+            roll[i] = Integer.parseInt(rolls[i]);
+        }
+
+        int [] ar = new int[6];
+        for(int i = 0; i < 6; i++){
+            ar[i] = 0;
+        }
+
+        for(int i = 0; i < input.length(); i ++){
+            if(input.charAt(i)=='1'){
+                ar[0]++;
+            }
+            else if(input.charAt(i)=='2'){
+                ar[1]++;
+            }
+            else if(input.charAt(i)=='3'){
+                ar[2]++;
+            }
+            else if(input.charAt(i)=='4'){
+                ar[3]++;
+            }
+            else if(input.charAt(i)=='5'){
+                ar[4]++;
+            }
+            else if(input.charAt(i)=='6'){
+                ar[5]++;
+            }
+        }
+
+        int mostCommon = 0;
+        double occurrences = 0;
+        for(int i = 1; i <ar.length; i ++){
+            if(ar[i] >= occurrences){
+                mostCommon = i+1;
+                occurrences = ar[i];
+            }
+        }
+
+            occurrences+=ar[0];
+                    
+            double probability = 0.0;
+            double temp = 0.0;
+            double num = 0.0;
+            int diceNum = (n-1)*5;
+            
+            int loop = n-1;
+            int count = 0;
+            
+            double result = 0.0;
+
+            while(count<=loop*5){
+                double sum = 0;
+                for(int i = 1; i < count; i++){
+                    sum+=nCr(diceNum, i)*Math.pow(1.0/3.0,i)*Math.pow(2.0/3.0, (diceNum-i));
+                }
+                
+                result = 1-sum;
+                    
+                if(result>=0.5 && count>num ){
+                    num = count;
+                    
+                }
+
+            count++;
+        }
+
+            double print = num+occurrences;
+            double number = (mostCommon);
+            int number2 = (int)number;
+
+            int printt = (int)print;
+            System.out.println(printt + " " + number2);
+    }
+
+        public static double nCr(int n, int r){
+        if(r>n/2){
+            r=n-r;
+        }
+        double answer = 1;
+        for(int i = 1; i<=r; i ++){
+            answer *= (n-r+i);
+            answer/=i;
+        }
+        return answer;
+    }
+}
